@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "me.Cleardragonf.EG",
+    "name": "Me.Cleardragonf.EG",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "ourminecraftserver.000webhostapp.com",
+    "updateUrl": "ourminecraftserver.000webhostapp.com",
+    "authorList": [
+      "Cleardragonf"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

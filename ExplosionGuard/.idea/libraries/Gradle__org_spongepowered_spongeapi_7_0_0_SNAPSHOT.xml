@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.spongepowered:spongeapi:7.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/spongeapi/7.0.0-SNAPSHOT/98d46a49149eeb19e76581eea9e53447f0152600/spongeapi-7.0.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/spongeapi/7.0.0-SNAPSHOT/6f11e5475d1dcde920a27cb8614153600f0dabab/spongeapi-7.0.0-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/spongeapi/7.0.0-SNAPSHOT/4ff7fa8c476684b6fd7c97884ba636f849ea7e16/spongeapi-7.0.0-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/spongeapi/7.0.0-SNAPSHOT/d7805410c596036a2b5a21bfdd9503c63c33c0f1/spongeapi-7.0.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
