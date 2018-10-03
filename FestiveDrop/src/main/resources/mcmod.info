@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "FestiveDrop",
+    "name": "FestiveDrop",
+    "description": "Testing",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "non.com",
+    "updateUrl": "",
+    "authorList": [
+      "Cleardragonf"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
