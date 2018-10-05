@@ -23,9 +23,12 @@ public class SetChest implements CommandExecutor{
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if((src instanceof Player)){
+            String message = args.<String>getOne("message").get();
+            String id = ((Player) src).getPlayer().get().getName() + " " + message;
             ConfigurationManager.getInstance().getConfig1().getNode("Chest Location", "X: ").setValue(((Player) src).getPosition().getX());
             ConfigurationManager.getInstance().getConfig1().getNode("Chest Location", "Y: ").setValue(((Player) src).getPosition().getY());
             ConfigurationManager.getInstance().getConfig1().getNode("Chest Location", "Z: ").setValue(((Player) src).getPosition().getZ());
+            ConfigurationManager.getInstance().getConfig1().getNode("Chest Location" + id, "Z: ").setValue(((Player) src).getPosition().getZ());
             ConfigurationManager.getInstance().save1();
         }
         return CommandResult.success();

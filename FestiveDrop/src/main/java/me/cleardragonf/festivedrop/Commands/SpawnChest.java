@@ -19,6 +19,7 @@ public class SpawnChest implements CommandExecutor{
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+        
         if((src instanceof Player)){
             SpawnItem spawnitem = new SpawnItem();
             spawnitem.spawnItem(generate(), ((Player) src).getLocation());

@@ -5,14 +5,17 @@ import me.cleardragonf.festivedrop.Commands.SetChest;
 import me.cleardragonf.festivedrop.Commands.SpawnChest;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.text.Text;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 
 @Plugin(
@@ -25,7 +28,31 @@ import java.io.File;
                 "Cleardragonf"
         }
 )
+
+
+
+
 public class FestiveDrop {
+
+    private static FestiveDrop instance;
+
+    @Nonnull
+    private final PluginContainer pluginContainer;
+
+    @Inject
+    public FestiveDrop(@Nonnull final PluginContainer pluginContainer) {
+        FestiveDrop.instance = this;
+        this.pluginContainer = pluginContainer;
+    }
+
+    public static FestiveDrop getInstance() {
+        return FestiveDrop.instance;
+    }
+
+    @Nonnull
+    public PluginContainer getPluginContainer() {
+        return this.pluginContainer;
+    }
 
     @Inject
     private Logger logger;
@@ -36,6 +63,7 @@ public class FestiveDrop {
 
 
 
+
     @Listener //setting of Commands
     public void allhands(GamePreInitializationEvent event){
         ConfigurationManager.getInstance().ConfigurationManager2(configDir);
@@ -43,6 +71,7 @@ public class FestiveDrop {
         CommandSpec SetChest;
         SetChest = CommandSpec.builder()
                 .description(Text.of("Set the Chest for the Drop"))
+                .arguments(GenericArguments.remainingJoinedStrings(Text.of("message")))
                 .executor(new SetChest())
                 .build();
         Sponge.getCommandManager().register(this,SetChest,"FDset");
