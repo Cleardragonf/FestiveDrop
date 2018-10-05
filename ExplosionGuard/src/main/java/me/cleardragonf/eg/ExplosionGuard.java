@@ -124,12 +124,12 @@ public class ExplosionGuard {
         }
         if (bang.getCause().first(Ghast.class).isPresent()) {
             if (ConfigurationManager.getInstance().getConfig().getNode("Explosions", "Ghast").getString().equalsIgnoreCase("false")){
-                if (ConfigurationManager.getInstance().getConfig().getNode("Undo?", "Undo_Ghast's_Explosion").getString().equalsIgnoreCase("yes")){
+                if (ConfigurationManager.getInstance().getConfig().getNode("Undo?", "Ghast","Would you like this to Rollback?").getString().equalsIgnoreCase("yes")){
                     bang.getAffectedLocations();
                     final List<Location<World>> transactions = bang.getAffectedLocations();
                     final Mend mend = new Mend(transactions);
                     Sponge.getScheduler().createTaskBuilder()
-                            .delay(ConfigurationManager.getInstance().getConfig().getNode("Undo?", "Ghast_Rollback_Time").getLong(), TimeUnit.SECONDS)
+                            .delay(ConfigurationManager.getInstance().getConfig().getNode("Undo?", "Ghast","Time to Heal?").getLong(), TimeUnit.SECONDS)
                             .name("Explosion Repair Task")
                             .execute(mend::heal)
                             .submit(this);
