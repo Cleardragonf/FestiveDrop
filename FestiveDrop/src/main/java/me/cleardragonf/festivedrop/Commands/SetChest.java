@@ -24,7 +24,7 @@ public class SetChest implements CommandExecutor{
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if((src instanceof Player)){
             String message = args.<String>getOne("ID Tag").get();
-            String block = args.<String>getOne("# of Items").get();
+            Integer block = args.<Integer>getOne("# of Items").get();
             String runOnStart = args.<String>getOne("Run on Start?").get();
             String id = message;
             ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "X: ").setValue(((Player) src).getPosition().getX());

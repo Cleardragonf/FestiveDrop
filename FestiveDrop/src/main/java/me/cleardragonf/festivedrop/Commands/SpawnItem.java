@@ -60,6 +60,29 @@ public class SpawnItem{
                 .name("ExamplePlugin - Fetch Stats from Database").submit(FestiveDrop.getInstance());
     }
 
+    public void serverDrop(ItemStack superMegaAwesomeSword, Location<World> spawnLocation, String id) {
+        ConfigurationManager.getInstance().load1();
+        Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "X: ").getDouble();
+        Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Y: ").getDouble();
+        Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Z: ").getDouble();
+        int number = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Number of Items: ").getInt();
+
+        for (int run = 0; run < number; run++) {
+            Vector3d location = new Vector3d(x, y, z);
+            Location<World> location2 = spawnLocation.setPosition(location);
+
+
+            Extent extent = spawnLocation.getExtent();
+            Entity item = spawnLocation.getExtent().createEntity(EntityTypes.ITEM, location2.getPosition());
+            item.offer(Keys.REPRESENTED_ITEM, superMegaAwesomeSword.createSnapshot());
+
+            try (CauseStackManager.StackFrame frame = Sponge.getCauseStackManager().pushCauseFrame()) {
+                frame.addContext(EventContextKeys.SPAWN_TYPE, SpawnTypes.PLACEMENT);
+                extent.spawnEntity(item);
+            }
+        }
+
+    }
 
 
 }

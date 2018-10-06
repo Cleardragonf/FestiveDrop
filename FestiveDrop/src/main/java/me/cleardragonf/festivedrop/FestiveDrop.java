@@ -83,7 +83,7 @@ public class FestiveDrop {
                         .permission("FestiveDrop.command.setLocation")
                         .arguments(
                                 GenericArguments.string(Text.of("ID Tag")),
-                                GenericArguments.string(Text.of("# of Items")),
+                                GenericArguments.integer(Text.of("# of Items")),
                                 GenericArguments.string(Text.of("Run on Start?"))
                         )
                         .executor(new SetChest())
@@ -112,25 +112,23 @@ public class FestiveDrop {
             @Override
             public void run() {
                 Sponge.getServer().getBroadcastChannel().send(Text.of("Drop Party Now Occuring"));
-                for (int id2 = 0; id2 < 10; id2++) {
-                        SpawnItem testing = new SpawnItem();
-                        SpawnChest item = new SpawnChest();
-                        ItemStack itemStack = item.randomizer();
+                for (int id2 = 0; id2 < 50; id2++) {
                         ConfigurationManager.getInstance().load1();
                         Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "X: ").getDouble();
                         Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Y: ").getDouble();
                         Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Z: ").getDouble();
-
                         Vector3d location = new Vector3d(x,y,z);
                         World world = Sponge.getServer().getWorld("world").get();
                         Location<World> worldLocation = new Location(world, 0,0,0);
+                        SpawnItem testing = new SpawnItem();
+                        SpawnChest item = new SpawnChest();
+                        ItemStack itemStack = item.randomizer();
                         String id = String.valueOf(id2);
-                        testing.spawnItem(itemStack, worldLocation, id);
-                        Sponge.getServer().getBroadcastChannel().send(Text.of("Dropping things"));
+                        testing.serverDrop(itemStack, worldLocation, id);
                 }
             }
         })
-                .interval(5, TimeUnit.SECONDS)
+                .interval(10, TimeUnit.SECONDS)
                 .name("Self-Cancelling Timer Task").submit(this);
     }
 
