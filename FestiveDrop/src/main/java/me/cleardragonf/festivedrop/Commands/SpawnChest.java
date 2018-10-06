@@ -26,6 +26,7 @@ public class SpawnChest implements CommandExecutor{
 
     }
 
+
     public ItemStack randomizer() {
 
         Random rand = new Random();

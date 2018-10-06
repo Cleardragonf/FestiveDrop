@@ -1,22 +1,30 @@
 package me.cleardragonf.festivedrop;
 
+import com.flowpowered.math.vector.Vector3d;
 import com.google.inject.Inject;
 import me.cleardragonf.festivedrop.Commands.SetChest;
 import me.cleardragonf.festivedrop.Commands.SpawnChest;
+import me.cleardragonf.festivedrop.Commands.SpawnItem;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
+import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.world.Location;
+import org.spongepowered.api.world.World;
 
 import javax.annotation.Nonnull;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 @Plugin(
         id = "festivedrop",
@@ -95,6 +103,35 @@ public class FestiveDrop {
     @Listener //***
     public void onServerStart(GameStartedServerEvent event) {
         logger.info("Festive Drop Loaded");
+
+    }
+
+    @Listener
+    public void onGameInit(GameInitializationEvent event) {
+        Task task = Task.builder().execute(new Runnable() {
+            @Override
+            public void run() {
+                Sponge.getServer().getBroadcastChannel().send(Text.of("Drop Party Now Occuring"));
+                for (int id2 = 0; id2 < 10; id2++) {
+                        SpawnItem testing = new SpawnItem();
+                        SpawnChest item = new SpawnChest();
+                        ItemStack itemStack = item.randomizer();
+                        ConfigurationManager.getInstance().load1();
+                        Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "X: ").getDouble();
+                        Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Y: ").getDouble();
+                        Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Z: ").getDouble();
+
+                        Vector3d location = new Vector3d(x,y,z);
+                        World world = Sponge.getServer().getWorld("world").get();
+                        Location<World> worldLocation = new Location(world, 0,0,0);
+                        String id = String.valueOf(id2);
+                        testing.spawnItem(itemStack, worldLocation, id);
+                        Sponge.getServer().getBroadcastChannel().send(Text.of("Dropping things"));
+                }
+            }
+        })
+                .interval(5, TimeUnit.SECONDS)
+                .name("Self-Cancelling Timer Task").submit(this);
     }
 
 
