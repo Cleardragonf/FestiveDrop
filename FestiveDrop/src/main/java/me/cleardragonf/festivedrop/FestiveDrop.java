@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import me.cleardragonf.festivedrop.Commands.SetChest;
 import me.cleardragonf.festivedrop.Commands.SpawnChest;
 import me.cleardragonf.festivedrop.Commands.SpawnItem;
+import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.args.GenericArguments;
@@ -122,13 +123,18 @@ public class FestiveDrop {
                         Location<World> worldLocation = new Location(world, 0,0,0);
                         SpawnItem testing = new SpawnItem();
                         SpawnChest item = new SpawnChest();
-                        ItemStack itemStack = item.randomizer();
-                        String id = String.valueOf(id2);
+                    ItemStack itemStack = null;
+                    try {
+                        itemStack = item.randomizer3();
+                    } catch (ObjectMappingException e) {
+                        e.printStackTrace();
+                    }
+                    String id = String.valueOf(id2);
                         testing.serverDrop(itemStack, worldLocation, id);
                 }
             }
         })
-                .interval(10, TimeUnit.SECONDS)
+                .interval(ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Time Between: ").getLong(), TimeUnit.SECONDS)
                 .name("Self-Cancelling Timer Task").submit(this);
     }
 

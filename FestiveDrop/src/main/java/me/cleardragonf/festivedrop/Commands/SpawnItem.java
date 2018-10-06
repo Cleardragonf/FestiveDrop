@@ -61,27 +61,38 @@ public class SpawnItem{
     }
 
     public void serverDrop(ItemStack superMegaAwesomeSword, Location<World> spawnLocation, String id) {
-        ConfigurationManager.getInstance().load1();
-        Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "X: ").getDouble();
-        Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Y: ").getDouble();
-        Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Z: ").getDouble();
-        int number = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Number of Items: ").getInt();
+        Integer timebetween = ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Time Between Item Waves: ").getInt();
+        Task task = Task.builder().execute(new Consumer<Task>() {
+            private int trial = 0;
 
-        for (int run = 0; run < number; run++) {
-            Vector3d location = new Vector3d(x, y, z);
-            Location<World> location2 = spawnLocation.setPosition(location);
+            @Override
+            public void accept(Task task) {
+                ConfigurationManager.getInstance().load1();
+                Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "X: ").getDouble();
+                Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Y: ").getDouble();
+                Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Z: ").getDouble();
+
+                Vector3d location = new Vector3d(x, y, z);
+                Location<World> location2 = spawnLocation.setPosition(location);
 
 
-            Extent extent = spawnLocation.getExtent();
-            Entity item = spawnLocation.getExtent().createEntity(EntityTypes.ITEM, location2.getPosition());
-            item.offer(Keys.REPRESENTED_ITEM, superMegaAwesomeSword.createSnapshot());
+                Extent extent = spawnLocation.getExtent();
+                Entity item = spawnLocation.getExtent().createEntity(EntityTypes.ITEM, location2.getPosition());
+                item.offer(Keys.REPRESENTED_ITEM, superMegaAwesomeSword.createSnapshot());
 
-            try (CauseStackManager.StackFrame frame = Sponge.getCauseStackManager().pushCauseFrame()) {
-                frame.addContext(EventContextKeys.SPAWN_TYPE, SpawnTypes.PLACEMENT);
-                extent.spawnEntity(item);
+                try (CauseStackManager.StackFrame frame = Sponge.getCauseStackManager().pushCauseFrame()) {
+                    frame.addContext(EventContextKeys.SPAWN_TYPE, SpawnTypes.PLACEMENT);
+                    extent.spawnEntity(item);
+                    trial++;
+                }
+                if (trial == ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "How Many of Each: ").getInt()) {
+                    task.cancel();
+                }
             }
-        }
 
+        })
+                .interval(timebetween, TimeUnit.SECONDS)
+                .name("ExamplePlugin - Fetch Stats from Database").submit(FestiveDrop.getInstance());
     }
 
 
