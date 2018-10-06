@@ -68,19 +68,28 @@ public class FestiveDrop {
     public void allhands(GamePreInitializationEvent event){
         ConfigurationManager.getInstance().ConfigurationManager2(configDir);
         ConfigurationManager.getInstance().enable();
-        CommandSpec SetChest;
-        SetChest = CommandSpec.builder()
-                .description(Text.of("Set the Chest for the Drop"))
-                .arguments(GenericArguments.remainingJoinedStrings(Text.of("message")))
-                .executor(new SetChest())
+
+        CommandSpec FD;
+        FD = CommandSpec.builder()
+                .child(CommandSpec.builder()
+                        .permission("FestiveDrop.command.setLocation")
+                        .arguments(
+                                GenericArguments.string(Text.of("ID Tag")),
+                                GenericArguments.string(Text.of("# of Items")),
+                                GenericArguments.string(Text.of("Run on Start?"))
+                        )
+                        .executor(new SetChest())
+                    .build(), "setLocation"
+                )
+                .child(CommandSpec.builder()
+                        .permission("FestiveDrop.command.SpawnDrop")
+                        .arguments(
+                                GenericArguments.string(Text.of("ID Tag")))
+                        .executor(new SpawnChest())
+                    .build(), "SpawnDrop"
+                )
                 .build();
-        Sponge.getCommandManager().register(this,SetChest,"FDset");
-        CommandSpec SpawnChest;
-        SpawnChest = CommandSpec.builder()
-                .description(Text.of("Spawn the Chest from the Configuration File"))
-                .executor(new SpawnChest())
-                .build();
-        Sponge.getCommandManager().register(this, SpawnChest, "FDSpawn");
+        Sponge.getCommandManager().register(this,FD,"FD");
     }
 
     @Listener //***

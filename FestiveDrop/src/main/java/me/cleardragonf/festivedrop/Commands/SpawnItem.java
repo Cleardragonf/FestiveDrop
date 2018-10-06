@@ -25,15 +25,16 @@ public class SpawnItem{
     Game game;
 
 
-    public void spawnItem(ItemStack superMegaAwesomeSword, Location<World> spawnLocation) {
+    public void spawnItem(ItemStack superMegaAwesomeSword, Location<World> spawnLocation, String id) {
         Task task = Task.builder().execute(new Consumer<Task>() {
             private int trial = 0;
             @Override
             public void accept(Task task) {
                     ConfigurationManager.getInstance().load1();
-                    Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location", "X: ").getDouble();
-                    Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location", "Y: ").getDouble();
-                    Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location", "Z: ").getDouble();
+                    Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "X: ").getDouble();
+                    Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Y: ").getDouble();
+                    Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Z: ").getDouble();
+
                     Vector3d location = new Vector3d(x,y,z);
                     Location<World> location2 = spawnLocation.setPosition(location);
 
@@ -49,7 +50,7 @@ public class SpawnItem{
                         extent.spawnEntity(item);
                         trial++;
                     }
-                    if(trial==5){
+                    if(trial==ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Number of Items: ").getInt()){
                         task.cancel();
                     }
             }
