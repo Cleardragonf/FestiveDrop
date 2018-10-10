@@ -125,9 +125,9 @@ public class FestiveDrop {
             @Override
             public void run() {
                 Sponge.getServer().getBroadcastChannel().send(Text.of("Drop Party Now Occuring"));
+                ConfigurationManager.getInstance().load1();
                 for (int id2 = 0; id2 < 100; id2++) {
                     if(!ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2).isVirtual()){
-                        ConfigurationManager.getInstance().load1();
                         Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "X: ").getDouble();
                         Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Y: ").getDouble();
                         Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Z: ").getDouble();
