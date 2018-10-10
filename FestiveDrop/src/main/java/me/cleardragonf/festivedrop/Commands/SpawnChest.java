@@ -1,8 +1,7 @@
 package me.cleardragonf.festivedrop.Commands;
 
-import com.google.common.reflect.TypeToken;
-import me.cleardragonf.festivedrop.ConfigurationManager;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -13,7 +12,10 @@ import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class SpawnChest implements CommandExecutor{
 
@@ -137,6 +139,7 @@ public class SpawnChest implements CommandExecutor{
         }
         return null;
     }
+
     public ItemStack randomizer2() {
 
         Random rand = new Random();
@@ -245,8 +248,24 @@ public class SpawnChest implements CommandExecutor{
     }
 
     public ItemStack randomizer3() throws ObjectMappingException {
-        ItemType a = ConfigurationManager.getInstance().getConfig1().getNode("Testing: ").getValue(TypeToken.of(ItemType.class));
-        ItemStack b = ItemStack.of(a);
-        return b;
+
+        //Collection<ItemStack> types = Sponge.getRegistry().getAllOf(ItemType.class).stream().map(ItemStack::of)
+        //        .collect(Collectors.toList());
+        List<ItemType> types = Sponge.getRegistry().getAllOf(ItemType.class).stream()
+
+                .collect(Collectors.toList());
+        Collections.shuffle(types);
+        ItemType a = types.get(0);
+
+            ItemStack Exacilber = ItemStack.builder()
+                    .itemType(a).build();
+            return Exacilber;
+
+/*
+ItemType a = ConfigurationManager.getInstance().getConfig1().getNode("Testing: ").getValue(TypeToken.of(ItemType.class));
+ItemStack b = ItemStack.of(a);
+return b;
+*/
+
     }
 }

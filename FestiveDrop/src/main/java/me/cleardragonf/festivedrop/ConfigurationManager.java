@@ -1,11 +1,8 @@
 package me.cleardragonf.festivedrop;
 
-import com.google.common.reflect.TypeToken;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
-import org.spongepowered.api.item.ItemType;
-import org.spongepowered.api.item.ItemTypes;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,7 +79,6 @@ public class ConfigurationManager {
                     config1.getNode("Server Drop Event", "Time Between: ").setComment("Please enter a Time in Seconds").setValue(60);
                     config1.getNode("Server Drop Event", "How Many of Each: ").setComment("Please Select a number that All of the Drops will leave.  Smaller number means Shorter Drops").setValue(10);
                     config1.getNode("Server Drop Event", "Time Between Item Waves: ").setComment("Please enter a Time in Seconds, that'll represent the number between each item dropping").setValue(2);
-                    config1.getNode("Testing: ").setValue(TypeToken.of(ItemType.class), ItemTypes.ANVIL);
                     save1();
                 }catch(Exception e){
                     e.printStackTrace();

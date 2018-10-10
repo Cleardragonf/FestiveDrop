@@ -15,6 +15,7 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
+import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
@@ -25,7 +26,10 @@ import org.spongepowered.api.world.World;
 
 import javax.annotation.Nonnull;
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Plugin(
         id = "festivedrop",
@@ -104,7 +108,23 @@ public class FestiveDrop {
     @Listener //***
     public void onServerStart(GameStartedServerEvent event) {
         logger.info("Festive Drop Loaded");
+        List<ItemType> types = Sponge.getRegistry().getAllOf(ItemType.class).stream()
 
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < 5; i++) {
+            Collections.shuffle(types);
+            ItemType a = types.get(0);
+            Sponge.getServer().getBroadcastChannel().send(Text.of(a));
+        }
+
+
+  //      Collection<ItemType> types = Sponge.getRegistry().getAllOf(ItemType.class);
+
+
+    //    for (ItemType et : types) {
+         //   Sponge.getServer().getBroadcastChannel().send(Text.of(et));
+//        }
     }
 
     @Listener
