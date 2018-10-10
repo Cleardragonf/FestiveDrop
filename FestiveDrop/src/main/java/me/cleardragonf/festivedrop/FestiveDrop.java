@@ -117,14 +117,6 @@ public class FestiveDrop {
             ItemType a = types.get(0);
             Sponge.getServer().getBroadcastChannel().send(Text.of(a));
         }
-
-
-  //      Collection<ItemType> types = Sponge.getRegistry().getAllOf(ItemType.class);
-
-
-    //    for (ItemType et : types) {
-         //   Sponge.getServer().getBroadcastChannel().send(Text.of(et));
-//        }
     }
 
     @Listener
@@ -133,7 +125,8 @@ public class FestiveDrop {
             @Override
             public void run() {
                 Sponge.getServer().getBroadcastChannel().send(Text.of("Drop Party Now Occuring"));
-                for (int id2 = 0; id2 < 50; id2++) {
+                for (int id2 = 0; id2 < 100; id2++) {
+                    if(!ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2).isVirtual()){
                         ConfigurationManager.getInstance().load1();
                         Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "X: ").getDouble();
                         Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Y: ").getDouble();
@@ -143,32 +136,19 @@ public class FestiveDrop {
                         Location<World> worldLocation = new Location(world, 0,0,0);
                         SpawnItem testing = new SpawnItem();
                         SpawnChest item = new SpawnChest();
-                    ItemStack itemStack = null;
-                    try {
-                        itemStack = item.randomizer3();
-                    } catch (ObjectMappingException e) {
-                        e.printStackTrace();
-                    }
-                    String id = String.valueOf(id2);
+                        ItemStack itemStack = null;
+                        try {
+                            itemStack = item.randomizer3();
+                        } catch (ObjectMappingException e) {
+                            e.printStackTrace();
+                        }
+                        String id = String.valueOf(id2);
                         testing.serverDrop(itemStack, worldLocation, id);
+                    }
                 }
             }
         })
-                .interval(ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Time Between: ").getLong(), TimeUnit.SECONDS)
-                .name("Self-Cancelling Timer Task").submit(this);
+            .interval(ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Time Between: ").getLong(), TimeUnit.SECONDS)
+            .name("Self-Cancelling Timer Task").submit(this);
     }
-
-
-/*
-    ******-*************May just need to be deleted???********************
-    @Listener
-    public void onChestInteract(InteractBlockEvent.Primary event, @First Player src) {
-    Optional<Location<World>> a = event.getTargetBlock().getLocation();
-    ChestInteract chestInteraction = new ChestInteract();
-    chestInteraction.setTarget(a);
-    Sponge.getServer().getBroadcastChannel().send(Text.of("You clicked on a Chest"));
-    }
-    */
-
-
 }
