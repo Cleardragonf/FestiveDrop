@@ -1,5 +1,6 @@
 package me.cleardragonf.festivedrop.Commands;
 
+import me.cleardragonf.festivedrop.ConfigurationManager;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
@@ -7,12 +8,15 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.text.Text;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -140,111 +144,17 @@ public class SpawnChest implements CommandExecutor{
         return null;
     }
 
-    public ItemStack randomizer2() {
+    public ItemStack randomizer2(int map) {
 
-        Random rand = new Random();
-        int n = rand.nextInt(20) + 1;
-        if (n == 1) {
+
             ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.DIAMOND_BLOCK).build();
+                    .itemType(ItemTypes.WRITTEN_BOOK).build();
+                        List<Text> pages = new LinkedList<>();
+                           pages.add(Text.of(ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Special Drops", "Item " + map + ": ").getValue()));
+                        Excaliber.offer(Keys.BOOK_PAGES, pages);
             return Excaliber;
-        }
-        if (n == 2) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.COAL_BLOCK).build();
-            return Excaliber;
-        }
-        if (n == 3) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.BRICK_BLOCK).build();
-            return Excaliber;
-        }
-        if (n == 4) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.EMERALD_BLOCK).build();
-            return Excaliber;
-        }
-        if (n == 5) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.GOLD_BLOCK).build();
-            return Excaliber;
-        }
-        if (n == 6) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.IRON_BLOCK).build();
-            return Excaliber;
-        }
-        if (n == 7) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.LAPIS_BLOCK).build();
-            return Excaliber;
-        }
-        if (n == 8) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.QUARTZ_BLOCK).build();
-            return Excaliber;
-        }
-        if (n == 9) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.REDSTONE_BLOCK).build();
-            return Excaliber;
-        }
-        if (n == 10) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.CLAY).build();
-            return Excaliber;
-        }
-        if (n == 11) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.LOG).build();
-            return Excaliber;
-        }
-        if (n == 12) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.BLAZE_ROD).build();
-            return Excaliber;
-        }
-        if (n == 13) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.SAND).build();
-            return Excaliber;
-        }
-        if (n == 14) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.STONE).build();
-            return Excaliber;
-        }
-        if (n == 15) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.DIRT).build();
-            return Excaliber;
-        }
-        if (n == 16) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.DIRT).build();
-            return Excaliber;
-        }
-        if (n == 17) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.DIRT).build();
-            return Excaliber;
-        }
-        if (n == 18) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.DIRT).build();
-            return Excaliber;
-        }
-        if (n == 19) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.DIRT).build();
-            return Excaliber;
-        }
-        if (n == 20) {
-            ItemStack Excaliber = ItemStack.builder()
-                    .itemType(ItemTypes.DIRT).build();
-            return Excaliber;
-        }
-        return null;
+
+
     }
 
     public ItemStack randomizer3() throws ObjectMappingException {

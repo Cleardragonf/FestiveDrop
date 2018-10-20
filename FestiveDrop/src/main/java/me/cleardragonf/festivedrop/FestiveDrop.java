@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -121,6 +122,7 @@ public class FestiveDrop {
 
     @Listener
     public void onGameInit(GameInitializationEvent event) {
+        ConfigurationManager.getInstance().load1();
         Task task = Task.builder().execute(new Runnable() {
             @Override
             public void run() {
@@ -138,11 +140,20 @@ public class FestiveDrop {
                         SpawnChest item = new SpawnChest();
                         ItemStack itemStack = null;
                         try {
-                            itemStack = item.randomizer3();
+                            Random random = new Random();
+                            int n = random.nextInt(100) + 1;
+                            if (n <= ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Special Drops", "Chance: ").getInt()){
+                                Random random1 = new Random();
+                                int map = random1.nextInt(10)+1;
+                                itemStack = item.randomizer2(map);
+                            }else{
+                                itemStack = item.randomizer3();
+                            }
                         } catch (ObjectMappingException e) {
                             e.printStackTrace();
                         }
                         String id = String.valueOf(id2);
+
                         testing.serverDrop(itemStack, worldLocation, id);
                     }
                 }

@@ -79,6 +79,17 @@ public class ConfigurationManager {
                     config1.getNode("Server Drop Event", "Time Between: ").setComment("Please enter a Time in Seconds").setValue(60);
                     config1.getNode("Server Drop Event", "How Many of Each: ").setComment("Please Select a number that All of the Drops will leave.  Smaller number means Shorter Drops").setValue(10);
                     config1.getNode("Server Drop Event", "Time Between Item Waves: ").setComment("Please enter a Time in Seconds, that'll represent the number between each item dropping").setValue(2);
+                    config1.getNode("Server Drop Event", "Special Drops", "Chance: ").setValue(100);
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 1: ").setValue("Stargate Testing 1");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 2: ").setValue("Stargate Testing 2");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 3: ").setValue("Stargate Testing3");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 4: ").setValue("Stargate Testing4");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 5: ").setValue("Stargate Testing5");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 6: ").setValue("Stargate Testing6");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 7: ").setValue("Stargate Testing7");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 8: ").setValue("Stargate Testing8");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 9: ").setValue("Stargate Testing9");
+                    config1.getNode("Server Drop Event", "Special Drops", "Item 10: ").setValue("Stargate Testing10");
                     save1();
                 }catch(Exception e){
                     e.printStackTrace();
