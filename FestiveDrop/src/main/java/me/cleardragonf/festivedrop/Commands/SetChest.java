@@ -27,11 +27,11 @@ public class SetChest implements CommandExecutor{
             Integer block = args.<Integer>getOne("# of Items").get();
             String runOnStart = args.<String>getOne("Run on Start?").get();
             String id = message;
-            ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "X: ").setValue(((Player) src).getPosition().getX());
-            ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Y: ").setValue(((Player) src).getPosition().getY());
-            ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Z: ").setValue(((Player) src).getPosition().getZ());
-            ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Number of Items: ").setValue(block);
-            ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Run on Start?").setValue(runOnStart);
+            ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "X: ").setValue(((Player) src).getPosition().getX());
+            ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Y: ").setValue(((Player) src).getPosition().getY());
+            ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Z: ").setValue(((Player) src).getPosition().getZ());
+            ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Number of Items: ").setValue(block);
+            ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Run on Start?").setValue(runOnStart);
             ConfigurationManager.getInstance().save1();
         }
         return CommandResult.success();

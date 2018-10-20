@@ -27,6 +27,7 @@ import org.spongepowered.api.world.World;
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -128,33 +129,57 @@ public class FestiveDrop {
             public void run() {
                 Sponge.getServer().getBroadcastChannel().send(Text.of("Drop Party Now Occuring"));
                 ConfigurationManager.getInstance().load1();
+                Random random = new Random();
+                int n = random.nextInt(100) + 1;
                 for (int id2 = 0; id2 < 100; id2++) {
-                    if(!ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2).isVirtual()){
-                        Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "X: ").getDouble();
-                        Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Y: ").getDouble();
-                        Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id2, "Z: ").getDouble();
-                        Vector3d location = new Vector3d(x,y,z);
-                        World world = Sponge.getServer().getWorld("world").get();
-                        Location<World> worldLocation = new Location(world, 0,0,0);
-                        SpawnItem testing = new SpawnItem();
-                        SpawnChest item = new SpawnChest();
-                        ItemStack itemStack = null;
-                        try {
-                            Random random = new Random();
-                            int n = random.nextInt(100) + 1;
-                            if (n <= ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Special Drops", "Chance: ").getInt()){
-                                Random random1 = new Random();
-                                int map = random1.nextInt(10)+1;
-                                itemStack = item.randomizer2(map);
-                            }else{
-                                itemStack = item.randomizer3();
-                            }
-                        } catch (ObjectMappingException e) {
-                            e.printStackTrace();
-                        }
-                        String id = String.valueOf(id2);
+                    if(!ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id2).isVirtual()){
+                        if (ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id2, "Run on Start?").getString().equals("true")) {
+                            Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id2, "X: ").getDouble();
+                            Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id2, "Y: ").getDouble();
+                            Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id2, "Z: ").getDouble();
+                            Vector3d location = new Vector3d(x, y, z);
+                            World world = Sponge.getServer().getWorld("world").get();
+                            Location<World> worldLocation = new Location(world, 0, 0, 0);
+                            SpawnItem testing = new SpawnItem();
+                            SpawnChest item = new SpawnChest();
+                            ItemStack itemStack = null;
+                            ItemStack itemStack1 = null;
+                            try {
 
-                        testing.serverDrop(itemStack, worldLocation, id);
+                                    Random random1 = new Random();
+                                    int map = random1.nextInt(10) + 1;
+                                    itemStack1 = item.randomizer2(map);
+                                    itemStack = item.randomizer3();
+
+                            } catch (ObjectMappingException e) {
+                                e.printStackTrace();
+                            }
+                            String id = String.valueOf(id2);
+                            if (n <= ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Special Drops", "Chance: ").getInt()) {
+                                Sponge.getServer().getBroadcastChannel().send(Text.of(ConfigurationManager.getInstance().getConfig1().getNode("Chests").getChildrenMap().keySet().toString()));
+                                String config = ConfigurationManager.getInstance().getConfig1().getNode("Chests").getChildrenMap().keySet().toString();
+                                String config1 = config.replace("[", "");
+                                String config2 = config1.replace("]", "");
+                                String[] test = config2.split(",");
+                                List<String> pages = new LinkedList<>();
+                                for (String a : test){
+                                    pages.add(a);
+                                }
+                                Collections.shuffle(pages);
+                                Sponge.getServer().getBroadcastChannel().send(Text.of(pages.get(0)));
+                                String finalChest = pages.get(0);
+                                String finalChest2 = finalChest.replace("Chest Location ", "");
+                                id = finalChest2.replace(" ", "");
+
+                                Sponge.getServer().getBroadcastChannel().send(Text.of(finalChest2));
+                                testing.serverDrop(itemStack1, worldLocation, id);
+                                id2 = 500;
+                            }else{
+                                testing.serverDrop(itemStack, worldLocation, id);
+                            }
+
+
+                        }
                     }
                 }
             }

@@ -31,9 +31,9 @@ public class SpawnItem{
             @Override
             public void accept(Task task) {
                 ConfigurationManager.getInstance().load1();
-                Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "X: ").getDouble();
-                Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Y: ").getDouble();
-                Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Z: ").getDouble();
+                Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "X: ").getDouble();
+                Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Y: ").getDouble();
+                Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Z: ").getDouble();
                 Vector3d location = new Vector3d(x,y,z);
                 Location<World> location2 = spawnLocation.setPosition(location);
 
@@ -46,7 +46,7 @@ public class SpawnItem{
                     extent.spawnEntity(item);
                     trial++;
                 }
-                if(trial==ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Number of Items: ").getInt()){
+                if(trial==ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Number of Items: ").getInt()){
                     task.cancel();
                 }
             }
@@ -64,9 +64,9 @@ public class SpawnItem{
             @Override
             public void accept(Task task) {
                 ConfigurationManager.getInstance().load1();
-                Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "X: ").getDouble();
-                Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Y: ").getDouble();
-                Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Z: ").getDouble();
+                Double x = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "X: ").getDouble();
+                Double y = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Y: ").getDouble();
+                Double z = ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Z: ").getDouble();
                 Vector3d location = new Vector3d(x, y, z);
                 Location<World> location2 = spawnLocation.setPosition(location);
                 Extent extent = spawnLocation.getExtent();
@@ -77,7 +77,7 @@ public class SpawnItem{
                     extent.spawnEntity(item);
                     trial++;
                 }
-                if (trial == ConfigurationManager.getInstance().getConfig1().getNode("Chest Location " + id, "Number of Items: ").getInt()) {
+                if (trial == ConfigurationManager.getInstance().getConfig1().getNode("Chests", "Chest Location " + id, "Number of Items: ").getInt()) {
                     task.cancel();
                 }
             }
