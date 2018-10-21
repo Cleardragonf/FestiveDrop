@@ -156,7 +156,6 @@ public class FestiveDrop {
                             }
                             String id = String.valueOf(id2);
                             if (n <= ConfigurationManager.getInstance().getConfig1().getNode("Server Drop Event", "Special Drops", "Chance: ").getInt()) {
-                                Sponge.getServer().getBroadcastChannel().send(Text.of(ConfigurationManager.getInstance().getConfig1().getNode("Chests").getChildrenMap().keySet().toString()));
                                 String config = ConfigurationManager.getInstance().getConfig1().getNode("Chests").getChildrenMap().keySet().toString();
                                 String config1 = config.replace("[", "");
                                 String config2 = config1.replace("]", "");
@@ -166,12 +165,9 @@ public class FestiveDrop {
                                     pages.add(a);
                                 }
                                 Collections.shuffle(pages);
-                                Sponge.getServer().getBroadcastChannel().send(Text.of(pages.get(0)));
                                 String finalChest = pages.get(0);
                                 String finalChest2 = finalChest.replace("Chest Location ", "");
                                 id = finalChest2.replace(" ", "");
-
-                                Sponge.getServer().getBroadcastChannel().send(Text.of(finalChest2));
                                 testing.serverDrop(itemStack1, worldLocation, id);
                                 id2 = 500;
                             }else{
